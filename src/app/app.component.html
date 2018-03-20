@@ -1,20 +1,37 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+  <h1>Angular + Redux</h1>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<mat-card style="margin-bottom: 10px">
+  <mat-card-title> Add Post </mat-card-title>
+  <mat-card-content>
+    <form class="example-form" #postForm="ngForm" (ngSubmit)="createPost()">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Title" [(ngModel)]="post.title" name="title">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput placeholder="Description" [(ngModel)]="post.description" name="description"></textarea>
+      </mat-form-field>
+      <button mat-raised-button color="accent" type="submit">Add</button>
+    </form>
+  </mat-card-content>
+  <button mat-raised-button (click)="removeAll()">Delete all</button>
+</mat-card>
+
+<div *ngIf="(posts | async)?.length!=0">
+  <mat-card *ngFor="let p of posts | async">
+    <mat-card-title>
+      {{  p.title }}
+      <button mat-mini-fab type="button" (click)="removePost(p)">
+        <mat-icon aria-label="Example icon-button with a delete icon">delete</mat-icon>
+      </button>
+    </mat-card-title>
+    <mat-card-content>
+      <p>{{ p.description }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
 
